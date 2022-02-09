@@ -3,7 +3,54 @@ from llist import sllist,sllistnode
 from collections import deque
 
 class Solution:
-  
+    class Solution:
+    def groupAnagrams(strs):
+        ans = collections.defaultdict(list)
+        for s in strs:
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord('a')] += 1
+            ans[tuple(count)].append(s)
+        return ans.values()
+    def search(self, nums, target):
+        start, end = 0, len(nums) - 1
+        while start <= end:
+            mid = start + (end - start) // 2
+            if nums[mid] == target: #if the middle point equals the target
+                return mid
+            elif nums[mid] >= nums[start]: #if the middle points is greater than or equal to the start 
+                if target >= nums[start] and target < nums[mid]:#the target is great than start and target is before middle point, search first half
+                    end = mid - 1
+                else:
+                    start = mid + 1 #if that's not true search second half
+            else:
+                if target <= nums[end] and target > nums[mid]: #if target less than nums end and greater than the mid
+                    start = mid + 1 #search last half
+                else:
+                    end = mid - 1 #search front half
+        return -1
+    
+    def search_diana(self, nums, target):
+
+        start,end =0, len(nums)-1 
+        while start <= end: 
+            mid = start + (end-start) //2
+
+            if nums[mid] == target: 
+                return mid
+            elif nums[mid] >= nums[start]:
+                if target >= nums[start] and target < nums[mid]:
+                    end = mid -1
+                else: 
+                    start = mid + 1
+
+            else: 
+                if target <= nums[end] and target > nums[mid]:
+                    start = mid + 1 
+                else: 
+                    end = mid -1 
+            return -1 
+
     def subsets(self, nums):
         n = len(nums)
         output = [[]]
@@ -463,7 +510,7 @@ class TreeNode:
 blue = Solution()
 
 nums = [4,5,6,7,0,1,2]
-target = 0
+target = 2
 searchReturn = blue.search(nums,target)
 
 nums = [1,2,3]
